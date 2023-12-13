@@ -3,7 +3,7 @@
 ## Introduction
 This is the updated version of the domain analysis service which is deployed on gate cloud and can be
 accessed once your gate cloud account has been given the relevant permissions.  
-The demo/UI version can be found here: https://cloud.gate.ac.uk/shopfront/displayItem/url-domain-analysis
+The demo/UI version can be found here: [https://cloud.gate.ac.uk/shopfront/displayItem/url-domain-analysis](https://cloud.gate.ac.uk/shopfront/displayItem/url-domain-analysis)
 
 In short, the service takes in text, extracts any URLs from it, and then looks through its sources to see if it has credibility
 information on any of the URLs found. In long, read on.
