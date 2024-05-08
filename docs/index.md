@@ -231,11 +231,13 @@ the only one which also reports on the spread of information through telegram ac
 store alongside facebook, twitter and tiktok accounts listed.
 
 ### Meta Factchecks:
-#### Source type: positive (provides a list of all independent fact-checking partners of Meta)
+***Source type: positive (provides a list of all independent fact-checking partners of Meta)***
+
 To mitigate the spread of misinformation and offer users more reliable information, Meta has collaborated with independent third-party fact-checkers worldwide certified through the non-partisan International Fact-Checking Network (IFCN). The webpage provides a list of all independent fact-checking partners of Meta. This data collection process is relatively straightforward; it involves compiling the various domains listed on the webpage and labelling them as a "fact checker" as reported by Meta.
 
 ### Iffy Index:
 ***Source type: caution (domains are only listed if the MBFC gives it a low credibility rating)***
+
 The Iffy Index of Unreliable Sources compiles credibility ratings from [Media Bias/Fact Check (MBFC)](https://mediabiasfactcheck.com/). MBFC boasts substantial experience, comprehensiveness, transparency, accountability, and currency in its reviews of news sites. The Iffy Index exclusively features sites that MBFC rates with a Low Credibility rating and categorises as either Conspiracy/Pseudoscience or Questionable Source/Fake News. A Low Credibility rating indicates that the site consistently fails fact-checks by IFCN-verified fact-checkers. The goal is to give researchers an accurate list of sites that propagate misinformation or disinformation, thus facilitating more precise disinformation research.
 
 
