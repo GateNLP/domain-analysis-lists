@@ -47,8 +47,8 @@ platform such as https://twitter.com/Independent, it doesn't really make sense t
 The Independent here - not Twitter. There are two places where this  distinction is taken into account:
 - *Data collection:* where we directly read in domains from other sources, we try to keep a mapping of equivalent social media account names
   so that these will not be ignored if a user passes a social media URL
-- *Using the service:* when users send in a URL, the service looks out for any Facebook, Twitter or
-  Tiktok URLs and should they be found, the linked account name rather than the domain is used for further processing
+- *Using the service:* when users send in a URL, the service looks out for any X/Twitter, Facebook, TikTok, Telegram or VKontakte
+  URLs and should they be found, the linked account name rather than the domain is used for further processing
 
 
 ## How does the process work end to end?
@@ -56,7 +56,7 @@ The Independent here - not Twitter. There are two places where this  distinction
   domains
 - When a user sends a set of text to the service, it first analyses the text to see if any URLs can be found
 - If any URLs can be found, for each of them:
-  - If the URL is a facebook, twitter or tiktok URL, the account rather than the domain is used in further processing
+  - If the URL is a X/Twitter, Facebook, TikTok, Telegram or VKontakte URL, the account rather than the domain is used in further processing
   - Otherwise, the main domain is extracted, and this is used for further processing
   - The service then checks the domain/account to see if it is present in any data from any collected sources
   - Any match found is added to the response json, allowing users to see any labels given, descriptions or evidence given by the source
@@ -69,7 +69,7 @@ A basic flowchart of the domain analysis process (with much of the finer detail 
 # Data Collection
 
 ## What sources are the data collected from?
-We currently collect data from 5 sources:
+We currently collect data from 10 sources:
 - [OpenSources](https://github.com/OpenSourcesGroup/opensources)
 - [Duke Reporters' Lab](https://reporterslab.org/fact-checking/)
 - [The Database of Known Fakes](https://weverify-demo.ontotext.com/)
@@ -77,6 +77,9 @@ We currently collect data from 5 sources:
 - [EuVsDisinfo](https://euvsdisinfo.eu/)
 - [Meta Factchecks](https://www.facebook.com/formedia/mjp/programs/third-party-fact-checking/partner-map)
 - [Iffy Index](https://iffy.news/index/)
+- [Public Interest News Foundation (PINF)](https://www.publicinterestnews.org.uk/)
+- [Hamilton 2.0](https://securingdemocracy.gmfus.org/hamilton-monitored-accounts-on-twitter/)
+- [Bundesverband Digitalpublisher und Zeitungsverleger (BDZV)](https://www.bdzv.de/zeitungen-in-deutschland)
 
 These are split into what we term "positive", "caution" or "mixed" sources.
 This does not mean the sources themselves are positive/negative etc. Instead, it tells you if that source assigns positive,
@@ -228,17 +231,32 @@ not yet implemented any way to figure out which user has posted the link based o
 quite a large number of the links given by StratCom, so it may later be worth implementing a way to do this.
 Since StratCom can update fairly regularly, we update this data weekly (automatically). Note that this source is currently
 the only one which also reports on the spread of information through telegram accounts - something we also now extract and
-store alongside facebook, twitter and tiktok accounts listed.
+store alongside facebook, twitter, vKontakte and tiktok accounts listed.
 
 ### Meta Factchecks:
 ***Source type: positive (provides a list of all independent fact-checking partners of Meta)***
 
-To mitigate the spread of misinformation and offer users more reliable information, Meta has collaborated with independent third-party fact-checkers worldwide certified through the non-partisan International Fact-Checking Network (IFCN). The webpage provides a list of all independent fact-checking partners of Meta. This data collection process is relatively straightforward; it involves compiling the various domains listed on the webpage and labelling them as a "fact checker" as reported by Meta.
+To mitigate the spread of misinformation and offer users more reliable information, Meta has collaborated with independent third-party fact-checkers worldwide certified through the non-partisan International Fact-Checking Network (IFCN). The [webpage](https://www.facebook.com/formedia/mjp/programs/third-party-fact-checking/partner-map) provides a list of all independent fact-checking partners of Meta. This data collection process is relatively straightforward; it involves compiling the various domains listed on the webpage and labelling them as a "fact checker" as reported by Meta. Note that this source is automatically updated every week.
 
 ### Iffy Index:
 ***Source type: caution (domains are only listed if the MBFC gives it a low credibility rating)***
 
-The Iffy Index of Unreliable Sources compiles credibility ratings from [Media Bias/Fact Check (MBFC)](https://mediabiasfactcheck.com/). MBFC boasts substantial experience, comprehensiveness, transparency, accountability, and currency in its reviews of news sites. The Iffy Index exclusively features sites that MBFC rates with a Low Credibility rating and categorises as either Conspiracy/Pseudoscience or Questionable Source/Fake News. A Low Credibility rating indicates that the site consistently fails fact-checks by IFCN-verified fact-checkers. The goal is to give researchers an accurate list of sites that propagate misinformation or disinformation, thus facilitating more precise disinformation research.
+The [Iffy Index](https://iffy.news/index/) of unreliable sources compiles credibility ratings from [Media Bias/Fact Check (MBFC)](https://mediabiasfactcheck.com/). MBFC boasts substantial experience, comprehensiveness, transparency, accountability, and currency in its reviews of news sites. The Iffy Index exclusively features sites that MBFC rates with a low credibility rating and categorises as either conspiracy/pseudoscience or questionable source/fake news. A low credibility rating indicates that the site consistently fails fact-checks by IFCN-verified fact-checkers. The goal is to give researchers an accurate list of sites that propagate misinformation or disinformation, thus facilitating more precise disinformation research. Note that this source is automatically updated every week.
+
+### Public Interest News Foundation (PINF):
+***Source type: positive (provides a list of all UK news providers)***
+
+[Public Interest News Foundation (PINF)](https://www.publicinterestnews.org.uk/) provides a list of all independent news providers in the UK. PINF is a UK-based charity dedicated to supporting and promoting independent journalism that serves the public interest. It provides funding, capacity-building resources, and advocacy to small news organizations, websites, and initiatives focused on producing high-quality public interest reporting. This data collection process is straightforward; it involves compiling the various domains listed on the webpage and labelling them as a "UK News Provider" as reported by PINF.
+
+### Hamilton 2.0:
+***Source type: mixed (provides a list of sources that directly attribute to the Russian, Chinese, or Iranian governments or their various news and information channels)***
+
+[Hamilton 2.0](https://securingdemocracy.gmfus.org/hamilton-monitored-accounts-on-twitter/) is a project of the Alliance for Securing Democracy at the German Marshall Fund (GMF), United States. It provides a list of sources that directly attribute to the Russian, Chinese, or Iranian governments or their various news and information channels. These channels and accounts often engage with topics, hashtags, URLs, and people that are in no way affiliated with the Russian, Chinese, or Iranian governments. Consequently, it would be inaccurate to hastily categorize any source as linked to state-backed propaganda without conducting further analysis. GMF urges users of Hamilton 2.0 not to make incorrect assumptions about its content and to apply further scrutiny. Hence, the source type of Hamilton 2.0 is labelled as mixed. Note that this source is automatically updated every week.
+
+### Bundesverband Digitalpublisher und Zeitungsverleger (BDZV):
+***Source type: positive (provides a list of all German news providers)***
+
+[Bundesverband Digitalpublisher und Zeitungsverleger (BDZV)](https://www.bdzv.de/zeitungen-in-deutschland) provides a list of all German daily newspapers and known weekly titles (and their digital presence). This data collection process is straightforward; it involves compiling the various domains listed on the webpage and labelling them as a "German News Provider" as reported by BDZV.
 
 
 # API details
@@ -278,6 +296,7 @@ A ```URL``` object is added to the list for each individual URL found in the ori
   "replaced":         (int) number of tokens merged to create URL
   "resolved-url":     (string) the URL once resolved to final location: in case URL entered redirects.
   "resolved-domain":  (string) domain of URL being evaluated
+  "credibility-scope":(string) scope of any credibility information about this URL, either a domain name (example.com) or a domain-and-account prefix for supported social media platforms (x.com/BBC)
 }
 ```
 
@@ -295,6 +314,7 @@ the list. A ```SourceCredibility``` object has the following structure:
   "string":         (string) the URL itself
   "replaced":       (int) number of tokens merged to create URL
   "resolved-url":   (string) the URL once resolved to final location: in case URL entered redirects.
+  "credibility-scope":(string) scope of any credibility information about this URL (see above)
   "source":         (string) the source from which this credibility information is taken
   "source-type":    (string) whether the source gives information on trusted media, media where it may be worth being wary or both.   
                     these correspond to a value of "positive", "caution" or "mixed"
@@ -325,10 +345,17 @@ In the domain analysis object part of the response
   - StratCom
   - GDI-Ads
   - GDI-MMRR
+  - Meta
+  - IFFY
+  - Public Interest News Foundation
+  - Hamilton 2.0
+  - Bundesverband Digitalpublisher und Zeitungsverleger
 - The following fields **are optionally returned**:
   - description 
   - evidence 
   - All other fields should be present in all responses.
+
+Note that this service does not rate the likely credibility of the specific URL provided, rather it aggregates URLs into higher level "scopes" and reports on what the credibility information sources report about that scope as a whole. For most URLs the scope is the domain of the URL, e.g. all URLs under https://www.reuters.com will report the same credibility information. However for certain social media platforms where many different individuals and organizations have an independent presence, the scope is the individual account name, such as x.com/BBC or tiktok.com/@channel4; the intention is that the scope represents the level at which a single organization has overall editorial control over the content published under that domain or account prefix. The service currently provides account-scoped credibility information for X/Twitter, Facebook, TikTok, Telegram and VKontakte.
 
 ## Example
 Assuming I sent in the following URL to the service: https://bit.ly/3oZRRyt .
@@ -352,7 +379,8 @@ that "dailytelegraph.com.au" is the domain to look for and sends back the follow
         "string": "https://www.dailytelegraph.com.au/subscribe/news/1/?sourceCode=DTWEB_WRE",
         "replaced": 24,
         "resolved-url": "https://www.dailytelegraph.com.au/remote/check_cookie.html?url=https://www.dailytelegraph.com.au/subscribe/news/1/?sourceCode=DTWEB_WRE",
-        "resolved-domain": "www.dailytelegraph.com.au"
+        "resolved-domain": "www.dailytelegraph.com.au",
+        "credibility-scope": "www.dailytelegraph.com.au"
       }
     ],
     "SourceCredibility": [
@@ -370,6 +398,7 @@ that "dailytelegraph.com.au" is the domain to look for and sends back the follow
         "source": "OpenSources",
         "replaced": 24,
         "resolved-domain": "www.dailytelegraph.com.au",
+        "credibility-scope": "www.dailytelegraph.com.au",
         "resolved-url": "https://www.dailytelegraph.com.au/remote/check_cookie.html?url=https://www.dailytelegraph.com.au/subscribe/news/1/?sourceCode=DTWEB_WRE",
         "domainOrAccount": "domain",
         "category": "URL",
@@ -395,6 +424,7 @@ that "dailytelegraph.com.au" is the domain to look for and sends back the follow
         "type": "present in GDI news reports",
         "updated": "20211215",
         "resolved-domain": "www.dailytelegraph.com.au",
+        "credibility-scope": "www.dailytelegraph.com.au",
         "source": "GDI-MMR",
         "domainOrAccount": "domain",
         "rule": "URL",
